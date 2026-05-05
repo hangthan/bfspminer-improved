@@ -67,6 +67,17 @@ python main.py --demo eyetracking
 ```
 Hệ thống sẽ chạy song song `BASELINE` và `IMPROVED` mode, in ra bảng so sánh chi tiết về thời gian, RAM, và độ bao phủ của Pattern. Mẫu báo cáo sẽ được lưu trong `evaluation/results/`.
 
+### Chạy Thực nghiệm 5 bài Benchmark (Evaluation Suite)
+Hệ thống hỗ trợ chạy tự động 5 bài thực nghiệm quan trọng trên Dataset REDD (Scalability, Parameter Sensitivity, Gap Impact, Adaptive Impact, Full dataset). Để chạy với dữ liệu giả lập (tốc độ nhanh):
+```bash
+python main.py --run-experiments
+```
+Hoặc để chạy bài benchmark **full power** (tới 767.829 items):
+```bash
+python main.py --run-experiments --full
+```
+*Kết quả sẽ được xuất ra dưới dạng Markdown `experiment_report.md` và CSV `experiment_results.csv` nằm trong folder `evaluation/results/`.*
+
 ### Kết quả Verification với Java Baseline
 Sau khi chạy script so sánh, dưới đây là kết quả đối chiếu giữa 2 phiên bản. Có thể thấy bản Python **khớp 100% độ chính xác** (số lượng tập phổ biến, support, và kết quả dự đoán) so với bản Java gốc, đồng thời thời gian thực thi vô cùng tối ưu:
 

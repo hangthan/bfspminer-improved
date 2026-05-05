@@ -72,6 +72,36 @@ def preprocess_redd(input_path: str, output_path: str, threshold: float = 30.0, 
     logger.info(f"Preprocess successful! Generated {total_sequence_count} events total.")
     return True
 
+def preprocess_msnbc(input_file: str, output_file: str) -> bool:
+    """
+    Preprocess MSNBC.csv into a flat sequence of events.
+    """
+    try:
+        if not os.path.exists(input_file):
+            logger.error(f"Input file {input_file} not found.")
+            return False
+            
+        logger.info(f"Preprocessing MSNBC dataset from {input_file}...")
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        
+        total_items = 0
+        with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+            for line in infile:
+                items = line.strip().split(',')
+                for item in items:
+                    item = item.strip()
+                    if item:  # Ignore empty strings (e.g. trailing commas)
+                        outfile.write(f"{item}\n")
+                        total_items += 1
+                        
+        logger.info(f"Finished MSNBC preprocessing. Total clicks extracted: {total_items}")
+        logger.info(f"Saved to {output_file}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error preprocessing MSNBC: {e}")
+        return False
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(message)s')
     if os.path.isdir("data/redd"):
