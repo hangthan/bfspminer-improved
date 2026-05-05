@@ -2,3 +2,16 @@ __pycache__/
 *.pyc
 .pytest_cache/
 reference/BFSPMiner-java/BFSPMiner/target/
+
+# Data sets and large files
+data/
+
+# Results and outputs
+evaluation/results/
+
+# Compiled Java Classes
+*.class
+
+# Temporary and IDE files
+scratch.py
+.vscode/

@@ -11,7 +11,11 @@ if exist "C:\Users\ASUS\miniconda3\python.exe" (
     set PYTHON_EXE="C:\Users\ASUS\miniconda3\python.exe"
 )
 
-%PYTHON_EXE% evaluation\compare_baseline.py
+set DATASET=%1
+if "%DATASET%"=="" set DATASET=redd
+
+echo Running for dataset: %DATASET%
+%PYTHON_EXE% evaluation\compare_baseline.py --dataset %DATASET%
 
 echo.
 pause

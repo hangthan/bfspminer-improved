@@ -1,37 +1,44 @@
-from typing import List
+from typing import List, Set, Tuple
 
 class EpisodeMiningExtension:
     """
     Extends sequence mining to support gap constraints and window-based episodes.
+    Optimized to limit search space and use early pruning.
     """
     def __init__(self, max_gap: int = 1, window_size: int = 5):
         self.max_gap = max_gap
         self.window_size = window_size
         
     def generate_patterns_with_gap(self, events: List[str], current_time: int, max_pattern_length: int) -> List[List[str]]:
-        """
-        Generates pattern suffixes allowing gaps up to max_gap within window_size.
-        Returns a list of pattern lists, where each pattern is REVERSED 
-        (e.g., target event is at index 0) for insertion into the Inverted T0 Tree.
-        """
         patterns = []
+        if current_time >= len(events):
+            return patterns
+            
         target = events[current_time]
-        
-        def dfs(idx: int, current_pattern: List[str], current_length: int):
-            if current_length == max_pattern_length:
-                return
-            
-            # Look backwards from idx - 1 down to idx - 1 - max_gap
-            start = max(0, idx - 1 - self.max_gap)
-            # Constrain by window_size relative to current_time
-            start = max(start, current_time - self.window_size + 1)
-            
-            for i in range(idx - 1, start - 1, -1):
-                new_pattern = current_pattern + [events[i]]
-                patterns.append(new_pattern)
-                dfs(i, new_pattern, current_length + 1)
-                
         patterns.append([target])
-        dfs(current_time, [target], 1)
         
+        if max_pattern_length <= 1:
+            return patterns
+
+        # Optimized gap pattern generation (without deque/visited overhead)
+        start_idx = max(0, current_time - self.window_size + 1)
+        paths = [([target], current_time)]
+        valid_patterns_set = set([(target,)])
+        
+        for _ in range(max_pattern_length - 1):
+            new_paths = []
+            for current_pattern, last_idx in paths:
+                end_search = max(start_idx, last_idx - self.max_gap)
+                for i in range(last_idx - 1, end_search - 1, -1):
+                    new_pattern = current_pattern + [events[i]]
+                    new_paths.append((new_pattern, i))
+                    
+                    tup = tuple(new_pattern)
+                    if tup not in valid_patterns_set:
+                        valid_patterns_set.add(tup)
+                        patterns.append(new_pattern)
+            paths = new_paths
+            if not paths:
+                break
+                
         return patterns

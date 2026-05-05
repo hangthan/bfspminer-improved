@@ -50,11 +50,22 @@ Toàn bộ logic được đảm bảo qua `pytest`.
 pytest tests/
 ```
 
-### Chạy so sánh với Baseline
+### Chạy so sánh với Baseline trên Toy Data
 ```bash
 run_comparison.bat
 ```
 File này sẽ chạy thuật toán gốc bằng Python (không bật extensions) trên toy stream và tự động biên dịch, chạy song song với bản Java gốc. 
+
+### Chạy Thực nghiệm trên Dataset REDD / EyeTracking
+Sau khi tiền xử lý xong dataset, chạy command:
+```bash
+python main.py --compare --dataset redd
+```
+Hoặc chạy Demo EyeTracking (nếu có data):
+```bash
+python main.py --demo eyetracking
+```
+Hệ thống sẽ chạy song song `BASELINE` và `IMPROVED` mode, in ra bảng so sánh chi tiết về thời gian, RAM, và độ bao phủ của Pattern. Mẫu báo cáo sẽ được lưu trong `evaluation/results/`.
 
 ### Kết quả Verification với Java Baseline
 Sau khi chạy script so sánh, dưới đây là kết quả đối chiếu giữa 2 phiên bản. Có thể thấy bản Python **khớp 100% độ chính xác** (số lượng tập phổ biến, support, và kết quả dự đoán) so với bản Java gốc, đồng thời thời gian thực thi vô cùng tối ưu:
