@@ -13,7 +13,7 @@ def preprocess_redd(input_path: str, output_path: str, threshold: float = 30.0, 
     If input_path is a directory, it processes all CSV files inside it and merges.
     """
     if ignore_devices is None:
-        ignore_devices = ['main', 'mains', '']
+        ignore_devices = ['main', 'mains', '', 'fridge', 'refrigerator', 'lighting', 'light']
         
     if not os.path.exists(input_path):
         logger.error(f"REDD dataset not found at {input_path}")

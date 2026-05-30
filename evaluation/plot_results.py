@@ -2,6 +2,7 @@ import os
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 def load_data(csv_file):
     data = {}
@@ -19,7 +20,7 @@ def load_data(csv_file):
             data[exp].append(row)
     return data
 
-def plot_scalability(data, output_dir):
+def plot_scalability(data, output_dir, prefix):
     exp_data = data.get('Exp1_Scalability', [])
     if not exp_data: return
     
@@ -31,17 +32,17 @@ def plot_scalability(data, output_dir):
     plt.plot(sizes, base_rt, marker='o', linestyle='-', color='blue', label='Baseline', linewidth=2)
     plt.plot(sizes, imp_rt, marker='s', linestyle='-', color='red', label='Improved (Adaptive + Gap)', linewidth=2)
     
-    plt.title('Scalability: Runtime vs Stream Size', fontsize=14)
+    plt.title(f'[{prefix.upper()}] Scalability: Runtime vs Stream Size', fontsize=14)
     plt.xlabel('Stream Size (Number of items)', fontsize=12)
     plt.ylabel('Runtime (Seconds)', fontsize=12)
     plt.legend(fontsize=12)
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'exp1_scalability_runtime.png'), dpi=300)
+    plt.savefig(os.path.join(output_dir, f'{prefix}_exp1_scalability_runtime.png'), dpi=300)
     plt.close()
-    print("Saved exp1_scalability_runtime.png")
+    print(f"Saved {prefix}_exp1_scalability_runtime.png")
 
-def plot_support_sensitivity(data, output_dir):
+def plot_support_sensitivity(data, output_dir, prefix):
     exp_data = data.get('Exp2_SupportSensitivity', [])
     if not exp_data: return
     
@@ -51,39 +52,68 @@ def plot_support_sensitivity(data, output_dir):
     plt.figure(figsize=(8, 5))
     plt.plot(thresholds, patterns, marker='o', linestyle='-', color='green', linewidth=2, markersize=8)
     
-    plt.title('Support Sensitivity: Threshold vs Patterns Found', fontsize=14)
+    plt.title(f'[{prefix.upper()}] Support Sensitivity', fontsize=14)
     plt.xlabel('Support Threshold', fontsize=12)
     plt.ylabel('Number of Patterns Found', fontsize=12)
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'exp2_support_sensitivity.png'), dpi=300)
+    plt.savefig(os.path.join(output_dir, f'{prefix}_exp2_support_sensitivity.png'), dpi=300)
     plt.close()
-    print("Saved exp2_support_sensitivity.png")
+    print(f"Saved {prefix}_exp2_support_sensitivity.png")
 
-def plot_gap_impact(data, output_dir):
+def plot_gap_impact(data, output_dir, prefix):
     exp_data = data.get('Exp3_GapImpact', [])
     if not exp_data: return
     
     gaps = [r['MaxGap'] for r in exp_data]
-    patterns = [int(r['Patterns']) for r in exp_data]
+    patterns = [int(float(r['Patterns'])) for r in exp_data]
+    closed = [int(float(r.get('Closed_Patterns', r['Patterns']))) for r in exp_data]
+    maximal = [int(float(r.get('Maximal_Patterns', 0))) for r in exp_data]
+    
+    x = np.arange(len(gaps))
+    width = 0.25
+    
+    plt.figure(figsize=(10, 6))
+    bars1 = plt.bar(x - width, patterns, width, label='Raw Patterns', color='skyblue')
+    bars2 = plt.bar(x, closed, width, label='Closed Patterns', color='orange')
+    bars3 = plt.bar(x + width, maximal, width, label='Maximal Patterns', color='green')
+    
+    plt.title(f'[{prefix.upper()}] Pattern Compression (Raw vs Closed vs Maximal)', fontsize=14)
+    plt.xlabel('Max Gap Length', fontsize=12)
+    plt.ylabel('Number of Patterns', fontsize=12)
+    plt.xticks(x, gaps)
+    plt.legend()
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    for bars in [bars1, bars2, bars3]:
+        for bar in bars:
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, str(int(yval)), ha='center', va='bottom', fontsize=9)
+            
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, f'{prefix}_exp3_gap_impact.png'), dpi=300)
+    plt.close()
+    print(f"Saved {prefix}_exp3_gap_impact.png")
+
+def plot_lift(data, output_dir, prefix):
+    exp_data = data.get('Exp3_GapImpact', [])
+    if not exp_data: return
+    
+    gaps = [r['MaxGap'] for r in exp_data]
+    lifts = [float(r.get('Avg_Lift', 0)) for r in exp_data]
     
     plt.figure(figsize=(8, 5))
-    bars = plt.bar(gaps, patterns, color='purple', alpha=0.7, width=0.5)
-    
-    for bar in bars:
-        yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval + 1, str(int(yval)), ha='center', va='bottom', fontsize=11)
-        
-    plt.title('Gap Impact Analysis', fontsize=14)
+    plt.plot(gaps, lifts, marker='D', linestyle='-', color='purple', linewidth=2, markersize=8)
+    plt.title(f'[{prefix.upper()}] Average Lift Score by Gap Size', fontsize=14)
     plt.xlabel('Max Gap Length', fontsize=12)
-    plt.ylabel('Patterns Found', fontsize=12)
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.ylabel('Average Lift', fontsize=12)
+    plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'exp3_gap_impact.png'), dpi=300)
+    plt.savefig(os.path.join(output_dir, f'{prefix}_exp3_lift_impact.png'), dpi=300)
     plt.close()
-    print("Saved exp3_gap_impact.png")
+    print(f"Saved {prefix}_exp3_lift_impact.png")
 
-def plot_adaptive_impact(data, output_dir):
+def plot_adaptive_impact(data, output_dir, prefix):
     exp_data = data.get('Exp4_AdaptiveImpact', [])
     if not exp_data: return
     
@@ -111,13 +141,14 @@ def plot_adaptive_impact(data, output_dir):
     ax1.set_xticks(x)
     ax1.set_xticklabels(modes)
     
-    plt.title('Adaptive Length Impact: Patterns vs Memory', fontsize=14)
+    plt.title(f'[{prefix.upper()}] Adaptive Length Impact: Patterns vs Memory', fontsize=14)
     fig.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'exp4_adaptive_impact.png'), dpi=300)
+    plt.savefig(os.path.join(output_dir, f'{prefix}_exp4_adaptive_impact.png'), dpi=300)
     plt.close()
-    print("Saved exp4_adaptive_impact.png")
+    print(f"Saved {prefix}_exp4_adaptive_impact.png")
 
 def main():
+    dataset_prefix = "msnbc" if len(sys.argv) > 1 and sys.argv[1].lower() == "msnbc" else "redd"
     csv_file = "evaluation/results/experiment_results.csv"
     output_dir = "evaluation/results/charts"
     
@@ -130,17 +161,17 @@ def main():
         print("No data found or file doesn't exist.")
         return
         
-    print(f"Generating charts in {output_dir}...")
+    print(f"Generating charts for {dataset_prefix.upper()} in {output_dir}...")
     
     try:
-        plot_scalability(data, output_dir)
-        plot_support_sensitivity(data, output_dir)
-        plot_gap_impact(data, output_dir)
-        plot_adaptive_impact(data, output_dir)
+        plot_scalability(data, output_dir, dataset_prefix)
+        plot_support_sensitivity(data, output_dir, dataset_prefix)
+        plot_gap_impact(data, output_dir, dataset_prefix)
+        plot_lift(data, output_dir, dataset_prefix)
+        plot_adaptive_impact(data, output_dir, dataset_prefix)
         print("All charts generated successfully!")
     except Exception as e:
         print(f"Error generating charts: {e}")
-        print("Please ensure you have matplotlib installed: 'pip install matplotlib numpy'")
 
 if __name__ == "__main__":
     main()

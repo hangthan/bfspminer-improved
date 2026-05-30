@@ -20,10 +20,12 @@ class EpisodeMiningExtension:
         if max_pattern_length <= 1:
             return patterns
 
-        # Optimized gap pattern generation (without deque/visited overhead)
+        # Optimized gap pattern generation with Hard Limit for Early Stopping
         start_idx = max(0, current_time - self.window_size + 1)
         paths = [([target], current_time)]
         valid_patterns_set = set([(target,)])
+        
+        max_combinations = 50  # Hard limit to prevent O(2^W) combinatorial explosion
         
         for _ in range(max_pattern_length - 1):
             new_paths = []
@@ -31,12 +33,17 @@ class EpisodeMiningExtension:
                 end_search = max(start_idx, last_idx - self.max_gap)
                 for i in range(last_idx - 1, end_search - 1, -1):
                     new_pattern = current_pattern + [events[i]]
-                    new_paths.append((new_pattern, i))
                     
                     tup = tuple(new_pattern)
                     if tup not in valid_patterns_set:
                         valid_patterns_set.add(tup)
                         patterns.append(new_pattern)
+                        new_paths.append((new_pattern, i))
+                        
+                    if len(new_paths) >= max_combinations:
+                        break
+                if len(new_paths) >= max_combinations:
+                    break
             paths = new_paths
             if not paths:
                 break

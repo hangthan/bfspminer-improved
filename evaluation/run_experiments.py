@@ -23,18 +23,41 @@ def run_single_eval(stream, config, desc="Mining", min_sup=0.001):
     mem_before = process.memory_info().rss / 1024 / 1024
     
     start_time = time.time()
-    for item in tqdm(stream, desc=desc, leave=False):
+    
+    hits = 0
+    total_preds = 0
+    
+    for i, item in enumerate(tqdm(stream, desc=desc, leave=False)):
+        if i > 1000 and i % 500 == 0:
+            preds = miner.predict_next(k=3, min_support=min_sup)
+            if preds and preds[0] != "":
+                total_preds += 1
+                if item in preds:
+                    hits += 1
+                    
         miner.feed_item(item)
         
     end_time = time.time()
     mem_after = process.memory_info().rss / 1024 / 1024
     
     patterns = miner.get_frequent_patterns(min_support=min_sup)
+    closed_patterns = miner.get_closed_patterns(min_support=min_sup)
+    maximal_patterns = miner.get_maximal_patterns(min_support=min_sup)
+    
+    # Calculate Interestingness (Avg Lift) on closed patterns
+    enhanced_closed = miner.calculate_interestingness(closed_patterns)
+    avg_lift = sum(p['lift'] for p in enhanced_closed) / len(enhanced_closed) if enhanced_closed else 0.0
+    
+    hit_rate = (hits / total_preds) * 100 if total_preds > 0 else 0.0
     
     return {
         "runtime": end_time - start_time,
         "memory": mem_after - mem_before,
         "patterns": len(patterns),
+        "closed_patterns": len(closed_patterns),
+        "maximal_patterns": len(maximal_patterns),
+        "avg_lift": avg_lift,
+        "hit_rate_pct": hit_rate,
         "miner": miner
     }
 
@@ -63,9 +86,17 @@ def exp1_scalability(stream_full):
             "Base_Runtime(s)": res_base["runtime"],
             "Base_Memory(MB)": res_base["memory"],
             "Base_Patterns": res_base["patterns"],
+            "Base_Closed": res_base["closed_patterns"],
+            "Base_Maximal": res_base["maximal_patterns"],
+            "Base_AvgLift": res_base["avg_lift"],
+            "Base_HitRate": res_base["hit_rate_pct"],
             "Imp_Runtime(s)": res_imp["runtime"],
             "Imp_Memory(MB)": res_imp["memory"],
-            "Imp_Patterns": res_imp["patterns"]
+            "Imp_Patterns": res_imp["patterns"],
+            "Imp_Closed": res_imp["closed_patterns"],
+            "Imp_Maximal": res_imp["maximal_patterns"],
+            "Imp_AvgLift": res_imp["avg_lift"],
+            "Imp_HitRate": res_imp["hit_rate_pct"]
         })
         
     return results
@@ -114,7 +145,11 @@ def exp3_gap_impact(stream):
             "MaxGap": gap,
             "Runtime(s)": res["runtime"],
             "Memory(MB)": res["memory"],
-            "Patterns": res["patterns"]
+            "Patterns": res["patterns"],
+            "Closed_Patterns": res["closed_patterns"],
+            "Maximal_Patterns": res["maximal_patterns"],
+            "Avg_Lift": res["avg_lift"],
+            "HitRate": res["hit_rate_pct"]
         })
         
     return results
@@ -134,7 +169,9 @@ def exp4_adaptive_impact(stream):
             "Mode": f"Fixed-{length}",
             "Runtime(s)": res["runtime"],
             "Memory(MB)": res["memory"],
-            "Patterns": res["patterns"]
+            "Patterns": res["patterns"],
+            "Closed_Patterns": res["closed_patterns"],
+            "HitRate": res["hit_rate_pct"]
         })
         
     logger.info("Running Exp 4 with Adaptive")
@@ -146,7 +183,11 @@ def exp4_adaptive_impact(stream):
         "Mode": "Adaptive",
         "Runtime(s)": res_adp["runtime"],
         "Memory(MB)": res_adp["memory"],
-        "Patterns": res_adp["patterns"]
+        "Patterns": res_adp["patterns"],
+        "Closed_Patterns": res_adp["closed_patterns"],
+        "Maximal_Patterns": res_adp["maximal_patterns"],
+        "Avg_Lift": res_adp["avg_lift"],
+        "HitRate": res_adp["hit_rate_pct"]
     })
     
     return results
@@ -163,7 +204,11 @@ def exp5_full_redd(stream_full):
         "StreamSize": len(stream_full),
         "Runtime(s)": res["runtime"],
         "Memory(MB)": res["memory"],
-        "Patterns": res["patterns"]
+        "Patterns": res["patterns"],
+        "Closed_Patterns": res["closed_patterns"],
+        "Maximal_Patterns": res["maximal_patterns"],
+        "Avg_Lift": res["avg_lift"],
+        "HitRate": res["hit_rate_pct"]
     }]
     
     return results

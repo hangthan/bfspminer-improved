@@ -15,3 +15,14 @@ evaluation/results/
 # Temporary and IDE files
 scratch.py
 .vscode/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
