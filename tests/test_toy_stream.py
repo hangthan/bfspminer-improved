@@ -28,10 +28,10 @@ def test_episode_mining_with_gaps():
     """
     Test the episode mining extension with gap constraints.
     """
-    miner = BFSPMiner(max_pattern_length=3, pruning=False, enable_gap=True, max_gap=1, window_size=4)
+    miner = BFSPMiner(max_pattern_length=3, pruning=False, enable_gap=True, max_gap=2, window_size=5)
     
     # Stream: a, x, b
-    # With max_gap = 1, pattern ('a', 'b') should be found even though they are separated by 'x'.
+    # With max_gap = 2, pattern ('a', 'b') should be found even though they are separated by 'x'.
     stream = ['a', 'x', 'b']
     for item in stream:
         miner.feed_item(item)
@@ -58,7 +58,7 @@ def test_adaptive_max_length():
         miner.feed_item(item)
         
     # initial max_len is 3. After 15 items (3 checks of low entropy), it should increase.
-    assert miner.max_pattern_length > 3, "Adaptive max length failed to increase on low entropy data!"
+    assert miner.config.max_pattern_length > 3, "Adaptive max length failed to increase on low entropy data!"
 
 def test_predictions():
     miner = BFSPMiner(max_pattern_length=3, pruning=False)

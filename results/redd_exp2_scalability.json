@@ -1,0 +1,46 @@
+[
+  {
+    "stream_size": 10000,
+    "base_runtime": 0.193,
+    "base_memory": 0.55,
+    "base_patterns": 26,
+    "base_hitrate": 100.0,
+    "imp_runtime": 0.827,
+    "imp_memory": 1.0,
+    "imp_patterns": 48,
+    "imp_hitrate": 100.0
+  },
+  {
+    "stream_size": 50000,
+    "base_runtime": 1.055,
+    "base_memory": 2.51,
+    "base_patterns": 36,
+    "base_hitrate": 100.0,
+    "imp_runtime": 4.578,
+    "imp_memory": 4.44,
+    "imp_patterns": 68,
+    "imp_hitrate": 100.0
+  },
+  {
+    "stream_size": 100000,
+    "base_runtime": 2.178,
+    "base_memory": 4.93,
+    "base_patterns": 74,
+    "base_hitrate": 96.97,
+    "imp_runtime": 10.142,
+    "imp_memory": 9.02,
+    "imp_patterns": 136,
+    "imp_hitrate": 100.0
+  },
+  {
+    "stream_size": 200000,
+    "base_runtime": 4.899,
+    "base_memory": 9.71,
+    "base_patterns": 81,
+    "base_hitrate": 96.48,
+    "imp_runtime": 22.456,
+    "imp_memory": 18.68,
+    "imp_patterns": 153,
+    "imp_hitrate": 99.75
+  }
+]

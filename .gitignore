@@ -21,6 +21,8 @@ scratch.py
 *.log
 *.out
 *.toc
+*.lof
+*.lot
 *.bbl
 *.blg
 *.fls

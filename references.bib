@@ -1,6 +1,181 @@
+% =====================================================================
+% BFSPMiner-Improved — References
+% =====================================================================
+
+% --- Core reference ---
 @inproceedings{hassani2019,
-  title={BFSPMiner: A batch-free sequential pattern miner for data streams},
-  author={Hassani, Marwan and others},
-  booktitle={Proceedings of the International Conference on Data Mining},
-  year={2019}
+  title     = {{BFSPMiner}: An effective and efficient batch-free algorithm for mining sequential patterns over data streams},
+  author    = {Hassani, Marwan and Habich, Dirk and Lehner, Wolfgang},
+  booktitle = {Proceedings of the IEEE International Conference on Data Mining (ICDM)},
+  pages     = {230--239},
+  year      = {2019},
+  publisher = {IEEE}
+}
+
+% --- Foundational SPM ---
+@inproceedings{agrawal1995,
+  title     = {Mining sequential patterns},
+  author    = {Agrawal, Rakesh and Srikant, Ramakrishnan},
+  booktitle = {Proceedings of the 11th International Conference on Data Engineering (ICDE)},
+  pages     = {3--14},
+  year      = {1995},
+  publisher = {IEEE}
+}
+
+@inproceedings{pei2001,
+  title     = {{PrefixSpan}: Mining sequential patterns efficiently by prefix-projected pattern growth},
+  author    = {Pei, Jian and Han, Jiawei and Mortazavi-Asl, Behzad and Pinto, Helen and Chen, Qiming and Dayal, Umeshwar and Hsu, Meichun},
+  booktitle = {Proceedings of the 17th International Conference on Data Engineering (ICDE)},
+  pages     = {215--224},
+  year      = {2001},
+  publisher = {IEEE}
+}
+
+@article{zaki2001,
+  title     = {{SPADE}: An efficient algorithm for mining frequent sequences},
+  author    = {Zaki, Mohammed J.},
+  journal   = {Machine Learning},
+  volume    = {42},
+  number    = {1--2},
+  pages     = {31--60},
+  year      = {2001},
+  publisher = {Springer}
+}
+
+@inproceedings{srikant1996,
+  title     = {Mining sequential patterns: Generalizations and performance improvements},
+  author    = {Srikant, Ramakrishnan and Agrawal, Rakesh},
+  booktitle = {Proceedings of the 5th International Conference on Extending Database Technology (EDBT)},
+  pages     = {3--17},
+  year      = {1996},
+  publisher = {Springer}
+}
+
+% --- Apriori / Anti-monotone ---
+@inproceedings{agrawal1994,
+  title     = {Fast algorithms for mining association rules},
+  author    = {Agrawal, Rakesh and Srikant, Ramakrishnan},
+  booktitle = {Proceedings of the 20th International Conference on Very Large Data Bases (VLDB)},
+  pages     = {487--499},
+  year      = {1994}
+}
+
+% --- Stream-based SPM ---
+@inproceedings{marascu2006,
+  title     = {Mining sequential patterns from data streams: a centroid approach},
+  author    = {Marascu, Alice and Masseglia, Florent},
+  booktitle = {Journal of Intelligent Information Systems},
+  volume    = {27},
+  number    = {3},
+  pages     = {291--307},
+  year      = {2006},
+  publisher = {Springer}
+}
+
+@inproceedings{ho2005,
+  title     = {Mining frequent patterns from data streams with online, interactive constraints},
+  author    = {Ho, Shen-Shyang and Wechsler, Harry},
+  booktitle = {Proceedings of the 5th IEEE International Conference on Data Mining (ICDM)},
+  pages     = {653--656},
+  year      = {2005},
+  publisher = {IEEE}
+}
+
+@article{fournier2017,
+  title     = {A survey of sequential pattern mining},
+  author    = {Fournier-Viger, Philippe and Lin, Jerry Chun-Wei and Kiran, Rage Uday and Koh, Yun Sing and Thomas, Rincy},
+  journal   = {Data Science and Pattern Recognition},
+  volume    = {1},
+  number    = {1},
+  pages     = {54--77},
+  year      = {2017}
+}
+
+% --- Episode Mining ---
+@article{mannila1997,
+  title     = {Discovery of frequent episodes in event sequences},
+  author    = {Mannila, Heikki and Toivonen, Hannu and Verkamo, A. Inkeri},
+  journal   = {Data Mining and Knowledge Discovery},
+  volume    = {1},
+  number    = {3},
+  pages     = {259--289},
+  year      = {1997},
+  publisher = {Springer}
+}
+
+@inproceedings{laxman2007,
+  title     = {A fast algorithm for finding frequent episodes in event streams},
+  author    = {Laxman, Srivatsan and Tankala, Vikram and White, Ryen W.},
+  booktitle = {Proceedings of the 13th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  pages     = {410--419},
+  year      = {2007},
+  publisher = {ACM}
+}
+
+@article{wu2013,
+  title     = {Mining sequential patterns with gap constraints},
+  author    = {Wu, Xindong and Zhu, Xingquan and Wu, Gong-Qing and Ding, Wei},
+  journal   = {Journal of Computer Science and Technology},
+  volume    = {28},
+  number    = {3},
+  pages     = {472--483},
+  year      = {2013},
+  publisher = {Springer}
+}
+
+% --- Datasets ---
+@inproceedings{kolter2011,
+  title     = {{REDD}: A public data set for energy disaggregation research},
+  author    = {Kolter, J. Zico and Johnson, Matthew J.},
+  booktitle = {Proceedings of the SustKDD Workshop on Data Mining Applications in Sustainability},
+  year      = {2011}
+}
+
+@misc{msnbc2000,
+  title     = {{MSNBC.com} Anonymous Web Data},
+  author    = {Cadez, Igor and Heckerman, David and Meek, Christopher and Smyth, Padhraic and White, Steven},
+  year      = {2000},
+  howpublished = {UCI Machine Learning Repository},
+  note      = {\url{https://archive.ics.uci.edu/ml/datasets/MSNBC.com+Anonymous+Web+Data}}
+}
+
+% --- Closed / Maximal Patterns ---
+@inproceedings{yan2003,
+  title     = {{CloSpan}: Mining closed sequential patterns in large datasets},
+  author    = {Yan, Xifeng and Han, Jiawei and Afshar, Ramin},
+  booktitle = {Proceedings of the 3rd SIAM International Conference on Data Mining (SDM)},
+  pages     = {166--177},
+  year      = {2003},
+  publisher = {SIAM}
+}
+
+% --- Concept Drift / Adaptive Mining ---
+@article{gama2014,
+  title     = {A survey on concept drift adaptation},
+  author    = {Gama, Jo{\~a}o and \v{Z}liobait{\.e}, Indr{\.e} and Bifet, Albert and Pechenizkiy, Mykola and Bouchachia, Abdelhamid},
+  journal   = {ACM Computing Surveys},
+  volume    = {46},
+  number    = {4},
+  pages     = {1--37},
+  year      = {2014},
+  publisher = {ACM}
+}
+
+@inproceedings{bifet2007,
+  title     = {Learning from time-changing data with adaptive windowing},
+  author    = {Bifet, Albert and Gavald\`{a}, Ricard},
+  booktitle = {Proceedings of the 7th SIAM International Conference on Data Mining (SDM)},
+  pages     = {443--448},
+  year      = {2007},
+  publisher = {SIAM}
+}
+
+% --- Prediction / Next-item ---
+@inproceedings{gueniche2013,
+  title     = {{CPT+}: Decreasing the time/space complexity of the Compact Prediction Tree},
+  author    = {Gueniche, Ted and Fournier-Viger, Philippe and Tseng, Vincent S.},
+  booktitle = {Proceedings of the 19th Pacific-Asia Conference on Knowledge Discovery and Data Mining (PAKDD)},
+  pages     = {625--636},
+  year      = {2015},
+  publisher = {Springer}
 }

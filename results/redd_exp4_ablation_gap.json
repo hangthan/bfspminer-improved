@@ -1,0 +1,57 @@
+[
+  {
+    "max_gap": 0,
+    "runtime_s": 2.366,
+    "peak_memory_mb": 5.04,
+    "patterns": 74,
+    "closed": 62,
+    "maximal": 17,
+    "avg_lift": 12.97,
+    "hit_rate_pct": 96.97,
+    "test_count": 198
+  },
+  {
+    "max_gap": 1,
+    "runtime_s": 7.699,
+    "peak_memory_mb": 8.21,
+    "patterns": 74,
+    "closed": 62,
+    "maximal": 17,
+    "avg_lift": 12.97,
+    "hit_rate_pct": 96.97,
+    "test_count": 198
+  },
+  {
+    "max_gap": 2,
+    "runtime_s": 9.23,
+    "peak_memory_mb": 8.94,
+    "patterns": 136,
+    "closed": 107,
+    "maximal": 17,
+    "avg_lift": 13.04,
+    "hit_rate_pct": 100.0,
+    "test_count": 198
+  },
+  {
+    "max_gap": 3,
+    "runtime_s": 10.051,
+    "peak_memory_mb": 9.03,
+    "patterns": 136,
+    "closed": 108,
+    "maximal": 17,
+    "avg_lift": 12.96,
+    "hit_rate_pct": 100.0,
+    "test_count": 198
+  },
+  {
+    "max_gap": 5,
+    "runtime_s": 9.933,
+    "peak_memory_mb": 8.96,
+    "patterns": 136,
+    "closed": 110,
+    "maximal": 17,
+    "avg_lift": 12.92,
+    "hit_rate_pct": 100.0,
+    "test_count": 198
+  }
+]

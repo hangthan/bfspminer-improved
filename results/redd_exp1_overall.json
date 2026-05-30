@@ -1,0 +1,23 @@
+{
+  "dataset": "REDD",
+  "stream_size": 457833,
+  "random_hit_rate": 40.48,
+  "majority_hit_rate": 81.51,
+  "base_runtime_s": 13.47,
+  "base_peak_memory_mb": 22.35,
+  "base_patterns": 105,
+  "base_closed": 92,
+  "base_maximal": 26,
+  "base_avg_lift": 19.13,
+  "base_hit_rate_pct": 97.92,
+  "base_test_count": 914,
+  "imp_runtime_s": 64.01,
+  "imp_peak_memory_mb": 40.28,
+  "imp_patterns": 203,
+  "imp_closed": 171,
+  "imp_maximal": 32,
+  "imp_avg_lift": 17.07,
+  "imp_hit_rate_pct": 99.45,
+  "imp_test_count": 914,
+  "pattern_increase_pct": 93.3
+}

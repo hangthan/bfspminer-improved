@@ -3,7 +3,7 @@
 ## Giới thiệu
 Dự án này là phiên bản Python cải tiến và tối ưu của thuật toán **BFSPMiner** (Batch-Free Sequential Pattern Miner), được phát triển dựa trên [bản Java gốc](https://github.com/Xsea/BFSPMiner) theo bài báo *"BFSPMiner: An Effective and Efficient Batch-Free Algorithm for Mining Sequential Patterns over Data Streams"*.
 
-Bên cạnh mã nguồn thuật toán, dự án còn đi kèm **Báo cáo Khoa học (LaTeX Report)** chi tiết tại file `bfspminer_improved_vi.pdf` (Tiếng Việt) và `bfspminer_improved.pdf` (Tiếng Anh). Các báo cáo này giải thích rõ về cơ sở lý thuyết, phân tích độ phức tạp, các cải tiến và kết quả thực nghiệm chuyên sâu.
+Bên cạnh mã nguồn thuật toán, dự án còn đi kèm **Báo cáo Khoa học (LaTeX Report)** chi tiết tại file `bfspminer_improved_vi.pdf` (Tiếng Việt) và `bfspminer_improved.pdf` (Tiếng Anh), cùng với **Báo cáo Bài tập lớn** tại `baocao_btl.pdf` và hướng dẫn chạy thực nghiệm chi tiết tại `demo_guide.md`. Các báo cáo này giải thích rõ về cơ sở lý thuyết, phân tích độ phức tạp, các cải tiến và kết quả thực nghiệm chuyên sâu.
 
 ---
 
@@ -68,23 +68,20 @@ python main.py --demo eyetracking
 ```
 Hệ thống in ra bảng so sánh chi tiết về thời gian, RAM, và độ bao phủ. Mẫu báo cáo sẽ được lưu trong `evaluation/results/`.
 
-### 5. Chạy Chuỗi 5 Bài Benchmark (Evaluation Suite)
-Hệ thống hỗ trợ tự động benchmark 5 đặc tính (Scalability, Parameter Sensitivity, Gap Impact, Adaptive Impact, Total Performance). Để chạy:
+### 5. Chạy Chuỗi Thực nghiệm (Evaluation Suite)
+Hệ thống hỗ trợ chạy benchmark tiêu chuẩn qua script `run_standardized_experiments.py`:
 ```bash
-# Chạy với giới hạn nhỏ (để test nhanh)
-python main.py --run-experiments --dataset msnbc
-
-# Chạy Full Power (toàn bộ stream hàng triệu items)
-python main.py --run-experiments --full --dataset redd
+# Chạy đánh giá trên dataset msnbc
+python evaluation/run_standardized_experiments.py --dataset msnbc
 ```
-*Kết quả xuất ra CSV tại `evaluation/results/experiment_results.csv`.*
+*Kết quả xuất ra các file JSON chi tiết tại thư mục `results/`.*
 
 ### 6. Trực quan hóa Kết quả (Plotting)
-Sau khi chạy Benchmark, bạn dùng script sau để tự động tạo ra các biểu đồ (line chart, bar chart) so sánh hiệu năng:
+Sau khi chạy Benchmark, bạn dùng script sau để tự động tạo ra các biểu đồ (line chart, bar chart) để đưa vào báo cáo:
 ```bash
-python evaluation/plot_results.py
+python evaluation/generate_figures.py
 ```
-Ảnh biểu đồ được lưu vào thư mục `evaluation/results/charts/`.
+Ảnh biểu đồ PDF và PNG chất lượng cao sẽ được lưu vào thư mục `figures/`.
 
 ### 7. Unit Testing
 Toàn bộ logic gốc và extensions đều được cover thông qua `pytest`:

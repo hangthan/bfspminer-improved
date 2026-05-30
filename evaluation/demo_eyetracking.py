@@ -10,7 +10,7 @@ def main():
     args = parser.parse_args()
     
     print("="*80)
-    print(" 🚀 BFSPMiner Demo on EyeTracking Dataset ")
+    print(" [*] BFSPMiner Demo on EyeTracking Dataset ")
     print("="*80)
     
     # Delegate to compare_baseline script

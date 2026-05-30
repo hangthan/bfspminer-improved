@@ -1,0 +1,57 @@
+[
+  {
+    "mode": "Fixed-3",
+    "runtime_s": 3.312,
+    "peak_memory_mb": 7.66,
+    "patterns": 356,
+    "closed": 355,
+    "maximal": 221,
+    "avg_lift": 2.54,
+    "hit_rate_pct": 24.24,
+    "test_count": 198
+  },
+  {
+    "mode": "Fixed-5",
+    "runtime_s": 5.235,
+    "peak_memory_mb": 21.89,
+    "patterns": 525,
+    "closed": 523,
+    "maximal": 194,
+    "avg_lift": 3.13,
+    "hit_rate_pct": 25.76,
+    "test_count": 198
+  },
+  {
+    "mode": "Fixed-8",
+    "runtime_s": 7.788,
+    "peak_memory_mb": 84.54,
+    "patterns": 581,
+    "closed": 578,
+    "maximal": 190,
+    "avg_lift": 3.63,
+    "hit_rate_pct": 25.76,
+    "test_count": 198
+  },
+  {
+    "mode": "Fixed-12",
+    "runtime_s": 12.228,
+    "peak_memory_mb": 200.45,
+    "patterns": 617,
+    "closed": 614,
+    "maximal": 186,
+    "avg_lift": 3.96,
+    "hit_rate_pct": 25.76,
+    "test_count": 198
+  },
+  {
+    "mode": "Adaptive",
+    "runtime_s": 3.943,
+    "peak_memory_mb": 11.69,
+    "patterns": 361,
+    "closed": 360,
+    "maximal": 216,
+    "avg_lift": 2.52,
+    "hit_rate_pct": 24.24,
+    "test_count": 198
+  }
+]
