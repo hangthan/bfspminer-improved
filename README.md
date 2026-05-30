@@ -3,7 +3,7 @@
 ## Giới thiệu
 Dự án này là phiên bản Python cải tiến và tối ưu của thuật toán **BFSPMiner** (Batch-Free Sequential Pattern Miner), được phát triển dựa trên [bản Java gốc](https://github.com/Xsea/BFSPMiner) theo bài báo *"BFSPMiner: An Effective and Efficient Batch-Free Algorithm for Mining Sequential Patterns over Data Streams"*.
 
-Bên cạnh mã nguồn thuật toán, dự án còn đi kèm **Báo cáo Khoa học (LaTeX Report)** chi tiết tại file `bfspminer_improved_vi.pdf` (Tiếng Việt) và `bfspminer_improved.pdf` (Tiếng Anh), cùng với **Báo cáo Bài tập lớn** tại `baocao_btl.pdf` và hướng dẫn chạy thực nghiệm chi tiết tại `demo_guide.md`. Các báo cáo này giải thích rõ về cơ sở lý thuyết, phân tích độ phức tạp, các cải tiến và kết quả thực nghiệm chuyên sâu.
+Bên cạnh mã nguồn thuật toán, dự án còn đi kèm **Báo cáo Khoa học (LaTeX Report)** chi tiết tại file `report/bfspminer_improved_vi.pdf` (Tiếng Việt) và `report/bfspminer_improved.pdf` (Tiếng Anh), cùng với **Báo cáo Bài tập lớn** tại `report/baocao_btl.pdf` và hướng dẫn chạy thực nghiệm chi tiết tại `demo_guide.md`. Các báo cáo này giải thích rõ về cơ sở lý thuyết, phân tích độ phức tạp, các cải tiến và kết quả thực nghiệm chuyên sâu.
 
 ---
 
