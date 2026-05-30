@@ -1,74 +1,101 @@
 # BFSPMiner-Improved
 
 ## Giới thiệu
-Dự án này là phiên bản Python của thuật toán **BFSPMiner** (Batch-Free Sequential Pattern Miner), được phát triển dựa trên [bản Java gốc](https://github.com/Xsea/BFSPMiner) theo bài báo "BFSPMiner: An Effective and Efficient Batch-Free Algorithm for Mining Sequential Patterns over Data Streams".
+Dự án này là phiên bản Python cải tiến và tối ưu của thuật toán **BFSPMiner** (Batch-Free Sequential Pattern Miner), được phát triển dựa trên [bản Java gốc](https://github.com/Xsea/BFSPMiner) theo bài báo *"BFSPMiner: An Effective and Efficient Batch-Free Algorithm for Mining Sequential Patterns over Data Streams"*.
+
+Bên cạnh mã nguồn thuật toán, dự án còn đi kèm **Báo cáo Khoa học (LaTeX Report)** chi tiết tại file `bfspminer_improved_vi.pdf` (Tiếng Việt) và `bfspminer_improved.pdf` (Tiếng Anh). Các báo cáo này giải thích rõ về cơ sở lý thuyết, phân tích độ phức tạp, các cải tiến và kết quả thực nghiệm chuyên sâu.
+
+---
 
 ## Cấu trúc và Phân tích bản Java (Baseline)
-Sau khi clone repository gốc, phân tích cấu trúc mã nguồn Java cho thấy các thành phần chính sau:
+Sau khi phân tích cấu trúc mã nguồn Java, thuật toán gốc gồm các thành phần chính sau:
 
-1. **`BFSPMiner`**: Class chính cung cấp giao diện khởi tạo và gọi thuật toán. Nhận các tham số như `maxPatternLength`, `pruning` flag, `delta`, `batchLength`, `alpha`, `eps`. Quản lý luồng bằng cách gọi `PatternBuilder` để xử lý từng event.
+1. **`BFSPMiner`**: Class chính cung cấp giao diện khởi tạo và gọi thuật toán. Nhận các tham số như `maxPatternLength`, `pruning`, `delta`, `batchLength`.
 2. **`PatternBuilder` & `TreeObject` (Inverted T0 Tree)**: 
-   - `PatternBuilder`: Lớp chịu trách nhiệm chính trong việc xây dựng cây Inverted T₀. Nó nối các event theo thứ tự đảo ngược và cập nhật đếm (count, batchCount) trên cây. Đồng thời, nó chứa phương thức `ssbePrune` để thực hiện chiến lược cắt tỉa (pruning) tiết kiệm bộ nhớ.
-   - `TreeObject`: Đại diện cho một node trong Inverted T₀ Tree. Chứa nhãn (value), danh sách timestamps, bộ đếm tần suất (count, batchCount) và liên kết đến các node con (qua danh sách `TreeObjectList`). Node root là một `TreeObject` trống với nhãn "root".
-3. **`Predictor`**: Lớp thực hiện dự đoán event tiếp theo dựa trên các pattern đã khai phá. Sử dụng điểm độ tin cậy (confidence) của các luật (rule) phù hợp với ngữ cảnh hiện tại (snapshot) để đưa ra `k` dự đoán.
-4. **`PatternMetrics` & `Util`**: Các module tiện ích để duyệt cây, đếm support/confidence, và các hàm bổ trợ cho quá trình sinh pattern.
+   - `PatternBuilder`: Xây dựng cây Inverted T₀. Nối các event theo thứ tự đảo ngược và cập nhật đếm (count, batchCount) trên cây. Đồng thời, nó chứa phương thức `ssbePrune` để thực hiện chiến lược cắt tỉa tiết kiệm bộ nhớ.
+   - `TreeObject`: Đại diện cho một node trong Inverted T₀ Tree (chứa value, list timestamps, count, child nodes).
+3. **`Predictor`**: Lớp thực hiện dự đoán event tiếp theo dựa trên các pattern đã khai phá (bằng confidence score).
+4. **`PatternMetrics` & `Util`**: Các module tiện ích duyệt cây và đếm support.
 
-> **Đánh giá bản Java**: Bản Java sử dụng cấu trúc `TreeObjectList` (kế thừa `ArrayList`) để lưu children, dẫn đến độ phức tạp O(N) khi tìm kiếm node con. Ngoài ra, cách trích xuất pattern dùng string manipulation khá kém hiệu quả. Bản Python sử dụng `Dict` (Hash Map) để tăng tốc O(1) và thuật toán `DFS` đệ quy để trích xuất pattern nhanh chóng hơn.
+> **Đánh giá bản Java**: Bản Java sử dụng cấu trúc `TreeObjectList` (kế thừa `ArrayList`) để lưu children, dẫn đến độ phức tạp O(N) khi tìm kiếm node con. Trong bản Python, chúng tôi sử dụng cấu trúc Dictionary (Hash Map) để tăng tốc độ tìm kiếm lên O(1) và thay thế logic trích xuất mẫu bằng thuật toán duyệt đồ thị `DFS` đệ quy nhanh chóng.
 
 ---
 
 ## Các Cải tiến (Extensions)
-Dự án Python này không chỉ implement lại bản gốc (với code clean và type hints) mà còn thêm 2 tính năng nâng cao:
+Dự án Python này không chỉ implement lại bản gốc một cách tối ưu (với code clean, type hints) mà còn tích hợp 2 tính năng nâng cao quan trọng:
 
 1. **AdaptiveMaxPatternLength (`core/adaptive_max_length.py`)**: 
-   - Tự động điều chỉnh `max_pattern_length` (từ 3 đến 15) dựa trên pattern density (đo bằng Shannon Entropy) và dung lượng RAM hiện tại (`psutil`).
-   - Nếu memory quá cao (>500MB) hoặc entropy > 3.0 (tính ngẫu nhiên cao), thuật toán sẽ giảm `max_pattern_length` để tăng hiệu năng. Nếu entropy thấp (dữ liệu có tính lặp lại quy luật), thuật toán sẽ tăng `max_pattern_length` để bắt được các pattern dài.
+   - Tự động điều chỉnh `max_pattern_length` (từ 3 đến 15) dựa trên mật độ luật (pattern density) thông qua chỉ số Shannon Entropy và dung lượng RAM hiện tại.
+   - Nếu RAM bị đầy hoặc chuỗi quá nhiễu (entropy > 3.0), hệ thống sẽ giảm độ dài mẫu tối đa. Ngược lại, nếu entropy thấp (dữ liệu có tính quy luật), thuật toán sẽ tăng chiều dài để khai phá được những mẫu chuỗi dài hơn.
 
 2. **EpisodeMiningExtension (`core/episode_extension.py`)**: 
-   - Hỗ trợ khai phá non-consecutive patterns (có gap).
-   - Thêm tham số `max_gap` (khoảng cách tối đa giữa 2 sự kiện) và `window_size` (độ rộng cửa sổ thời gian). 
-   - Khi cờ `enable_gap=True` được bật, thuật toán sinh ra tất cả các chuỗi hợp lệ thỏa mãn điều kiện gap và đưa vào cây Inverted T0 Tree. Thuật toán đảm bảo mỗi event chỉ được cập nhật tối đa 1 lần trên mỗi path của cây thông qua cờ `visited_nodes`.
+   - Hỗ trợ khai phá non-consecutive patterns (chuỗi sự kiện có khoảng cách/gap).
+   - Bổ sung tham số `max_gap` (khoảng cách tối đa giữa 2 sự kiện) và `window_size` (độ rộng cửa sổ thời gian). 
+   - Khi cờ `enable_gap=True` được bật, thuật toán sinh ra tất cả các tổ hợp chuỗi con hợp lệ thỏa mãn điều kiện gap và đưa vào cây Inverted T0 Tree.
 
 ---
 
-## Cách chạy và Kiểm thử
+## Cách cài đặt và Chạy code
 
-### Cài đặt môi trường
+### 1. Cài đặt môi trường
+Yêu cầu Python 3.9+.
 ```bash
 pip install -r requirements.txt
 ```
 
-### Chạy Demo (main.py)
+### 2. Chạy Demo Cơ bản (Toy Data)
 ```bash
 python main.py
 ```
-Script sẽ chạy một chuỗi sự kiện mẫu với cả `AdaptiveMaxPatternLength` và `EpisodeMiningExtension` được bật, in ra các tập phổ biến có chứa gap và thử dự đoán 2 event tiếp theo.
+Script sẽ chạy một chuỗi sự kiện mẫu, tự động bật `AdaptiveMaxPatternLength` và `EpisodeMiningExtension`, in ra các tập phổ biến có chứa khoảng cách (gap) và thử dự đoán 2 sự kiện tiếp theo.
 
-### Chạy Unit Test
-Toàn bộ logic được đảm bảo qua `pytest`.
+### 3. Phân tích Dữ liệu (EDA & Preprocessing)
+Dự án cung cấp các script hỗ trợ tiền xử lý và phân tích (EDA) các bộ dữ liệu lớn:
+- **REDD EDA**: Chạy `python evaluation/redd_baseline_eda.py` để trích xuất các thông tin phân phối, vẽ biểu đồ chuỗi thời gian của bộ dữ liệu tiêu thụ điện năng.
+- **Tiền xử lý (Preprocess)**: Dữ liệu REDD, MSNBC sẽ được tự động làm sạch và sinh ra chuỗi (sequence) qua script `evaluation/preprocess_redd.py`.
+
+### 4. Chạy Thực nghiệm Đối chiếu với Java Baseline
+Hệ thống tự động biên dịch code Java bằng `rebuild_jar.bat` và gọi file `.class` qua subprocess để chạy đối chiếu trực tiếp với bản Python.
+```bash
+# Đối chiếu trên REDD
+python main.py --compare --dataset redd
+
+# Đối chiếu trên MSNBC
+python main.py --compare --dataset msnbc
+
+# Đối chiếu EyeTracking
+python main.py --demo eyetracking
+```
+Hệ thống in ra bảng so sánh chi tiết về thời gian, RAM, và độ bao phủ. Mẫu báo cáo sẽ được lưu trong `evaluation/results/`.
+
+### 5. Chạy Chuỗi 5 Bài Benchmark (Evaluation Suite)
+Hệ thống hỗ trợ tự động benchmark 5 đặc tính (Scalability, Parameter Sensitivity, Gap Impact, Adaptive Impact, Total Performance). Để chạy:
+```bash
+# Chạy với giới hạn nhỏ (để test nhanh)
+python main.py --run-experiments --dataset msnbc
+
+# Chạy Full Power (toàn bộ stream hàng triệu items)
+python main.py --run-experiments --full --dataset redd
+```
+*Kết quả xuất ra CSV tại `evaluation/results/experiment_results.csv`.*
+
+### 6. Trực quan hóa Kết quả (Plotting)
+Sau khi chạy Benchmark, bạn dùng script sau để tự động tạo ra các biểu đồ (line chart, bar chart) so sánh hiệu năng:
+```bash
+python evaluation/plot_results.py
+```
+Ảnh biểu đồ được lưu vào thư mục `evaluation/results/charts/`.
+
+### 7. Unit Testing
+Toàn bộ logic gốc và extensions đều được cover thông qua `pytest`:
 ```bash
 pytest tests/
 ```
 
-### Chạy so sánh với Baseline trên Toy Data
-```bash
-run_comparison.bat
-```
-File này sẽ chạy thuật toán gốc bằng Python (không bật extensions) trên toy stream và tự động biên dịch, chạy song song với bản Java gốc. 
+---
 
-### Chạy Thực nghiệm trên Dataset REDD / EyeTracking
-Sau khi tiền xử lý xong dataset, chạy command:
-```bash
-python main.py --compare --dataset redd
-```
-Hoặc chạy Demo EyeTracking (nếu có data):
-```bash
-python main.py --demo eyetracking
-```
-Hệ thống sẽ chạy song song `BASELINE` và `IMPROVED` mode, in ra bảng so sánh chi tiết về thời gian, RAM, và độ bao phủ của Pattern. Mẫu báo cáo sẽ được lưu trong `evaluation/results/`.
-
-### Kết quả Verification với Java Baseline
-Sau khi chạy script so sánh, dưới đây là kết quả đối chiếu giữa 2 phiên bản. Có thể thấy bản Python **khớp 100% độ chính xác** (số lượng tập phổ biến, support, và kết quả dự đoán) so với bản Java gốc, đồng thời thời gian thực thi vô cùng tối ưu:
+## Kết quả Verification mẫu
+Sau khi đối chiếu, phiên bản Python cho **độ chính xác 100%** so với bản Java gốc (về số lượng mẫu phổ biến, support và luật dự đoán), trong khi có tốc độ thực thi nhỉnh hơn hoặc bằng nhờ cấu trúc dữ liệu Dictionary.
 
 ```text
 ======================================================================

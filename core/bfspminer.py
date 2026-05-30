@@ -61,6 +61,66 @@ class BFSPMiner:
         self.frequent_patterns.sort(key=lambda x: x['support'], reverse=True)
         return self.frequent_patterns
 
+    def get_closed_patterns(self, min_support: float) -> List[Dict[str, Any]]:
+        patterns = self.get_frequent_patterns(min_support)
+        closed = []
+        
+        def is_subsequence(sub, main):
+            it = iter(main)
+            return all(any(c == x for c in it) for x in sub)
+            
+        for p in patterns:
+            is_closed = True
+            for other in patterns:
+                if p != other and p['count'] == other['count'] and len(other['pattern']) > len(p['pattern']):
+                    if is_subsequence(p['pattern'], other['pattern']):
+                        is_closed = False
+                        break
+            if is_closed:
+                closed.append(p)
+        return closed
+
+    def get_maximal_patterns(self, min_support: float) -> List[Dict[str, Any]]:
+        patterns = self.get_frequent_patterns(min_support)
+        maximal = []
+        
+        def is_subsequence(sub, main):
+            it = iter(main)
+            return all(any(c == x for c in it) for x in sub)
+            
+        for p in patterns:
+            is_maximal = True
+            for other in patterns:
+                if p != other and len(other['pattern']) > len(p['pattern']):
+                    if is_subsequence(p['pattern'], other['pattern']):
+                        is_maximal = False
+                        break
+            if is_maximal:
+                maximal.append(p)
+        return maximal
+
+    def calculate_interestingness(self, patterns: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        support_map = {p['pattern']: p['support'] for p in patterns}
+        
+        enhanced_patterns = []
+        for p in patterns:
+            new_p = p.copy()
+            pat = p['pattern']
+            if len(pat) > 1:
+                prefix = pat[:-1]
+                target = (pat[-1],)
+                
+                supp_prefix = support_map.get(prefix, 1.0)
+                supp_target = support_map.get(target, 1.0)
+                
+                lift = p['support'] / (supp_prefix * supp_target) if (supp_prefix * supp_target) > 0 else 0.0
+                new_p['lift'] = lift
+            else:
+                new_p['lift'] = 1.0
+            enhanced_patterns.append(new_p)
+            
+        return enhanced_patterns
+
     def predict_next(self, k: int = 3, min_support: float = 0.01) -> List[str]:
         patterns = self.get_frequent_patterns(min_support)
         if not patterns:

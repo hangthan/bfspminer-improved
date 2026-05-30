@@ -31,6 +31,15 @@ def load_dataset(dataset_name):
             if not success:
                 print("[-] Failed to preprocess REDD dataset.")
                 sys.exit(1)
+    elif dataset_name == "msnbc":
+        file_path = "data/msnbc_sequence.txt"
+        if not os.path.exists(file_path):
+            print("[*] MSNBC sequence file not found. Auto-running preprocess...")
+            from evaluation.preprocess_redd import preprocess_msnbc
+            success = preprocess_msnbc("reference/BFSPMiner-java/BFSPMiner/MSNBC.csv", file_path)
+            if not success:
+                print("[-] Failed to preprocess MSNBC dataset.")
+                sys.exit(1)
                 
     if not os.path.exists(file_path):
         print(f"[-] Dataset file not found at {file_path}")

@@ -41,6 +41,9 @@ def main():
     parser.add_argument("--preprocess", type=str, help="Run preprocess for specific dataset (e.g., redd)")
     parser.add_argument("--demo", type=str, help="Run specific demo (e.g., eyetracking)")
     parser.add_argument("--dataset", type=str, default="redd", help="Dataset to use for comparison")
+    parser.add_argument("--run-experiments", action="store_true", help="Run the full 5-experiment suite")
+    parser.add_argument("--full", action="store_true", help="Run full stream on all exps (for --run-experiments)")
+    parser.add_argument("--limit", type=int, default=0, help="Stream limit for experiments/comparison")
     
     args = parser.parse_args()
     
@@ -55,6 +58,19 @@ def main():
         import subprocess
         print(f"[*] Running comparison on {args.dataset} dataset...")
         cmd = [sys.executable, "evaluation/compare_baseline.py", "--dataset", args.dataset]
+        if args.limit > 0:
+            cmd.extend(["--limit", str(args.limit)])
+        subprocess.run(cmd)
+    elif args.run_experiments:
+        import subprocess
+        print("[*] Running Full Experiment Suite...")
+        cmd = [sys.executable, "evaluation/run_experiments.py"]
+        if args.dataset:
+            cmd.extend(["--dataset", args.dataset])
+        if args.limit > 0:
+            cmd.extend(["--limit", str(args.limit)])
+        if args.full:
+            cmd.append("--full")
         subprocess.run(cmd)
     elif args.demo:
         if args.demo.lower() == "eyetracking":
