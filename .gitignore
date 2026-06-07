@@ -6,6 +6,9 @@ reference/BFSPMiner-java/BFSPMiner/target/
 # Data sets and large files
 data/
 
+plan/
+mta_thesis_template/
+
 # Results and outputs
 evaluation/results/
 
