@@ -212,42 +212,53 @@ python main.py --run-experiments --dataset redd --full
 python main.py --run-experiments --dataset msnbc --full
 ```
 
-### Chi tiết 4 Thí nghiệm
+### Chi tiết 4 Thí nghiệm (Chuẩn hoá theo Báo cáo)
 
-| Exp | Tên thí nghiệm               | Mô tả                                                                    |
-|-----|-------------------------------|---------------------------------------------------------------------------|
-| 1   | **Scalability**               | Đo runtime & memory ở các kích thước stream khác nhau (10K → 200K)       |
-| 2   | **Support Sensitivity**       | Ảnh hưởng của ngưỡng support (0.05, 0.1, 0.15, 0.2) đến số pattern       |
-| 3   | **Gap Impact**                | Tác động của `max_gap` (0, 3, 5, 7) đến số pattern và prediction quality |
-| 4   | **Adaptive Impact**           | So sánh Fixed-length (3, 5, 8, 12) vs Adaptive về pattern & memory       |
+| Exp | Tên thí nghiệm | Tương ứng trong báo cáo | Mô tả |
+|-----|-------------------------------|------------------------|---------------------------------------------------------------------------|
+| 1 | **Overall Comparison** | Mục 5.3 | So sánh Random, Majority, Base và Improved trên toàn bộ dữ liệu |
+| 2 | **Scalability** | Mục 5.4, 5.5, 5.7 | Đo số mẫu, Precision@3, runtime, memory theo các mốc (10K → 200K) |
+| 3 | **Ablation (Adaptive)** | Mục 5.6.1 | So sánh Fixed-length (3, 5, 8, 12) vs Adaptive về bộ nhớ và số mẫu |
+| 4 | **Ablation (Gap Impact)** | Mục 5.6.2 | Tác động của `max_gap` (0, 1, 2, 3, 5) đến Precision@3 và số lượng mẫu |
+
+> **💡 Lưu ý quan trọng về thiết kế thí nghiệm (Python Base vs Java Base):**
+> Trong toàn bộ 4 thí nghiệm đánh giá hiệu năng này, phiên bản **"Base"** được sử dụng để làm mốc so sánh là **Python Base** (thuật toán BFSPMiner code bằng Python nhưng tắt cấu hình `adaptive` và `gap`), chứ KHÔNG PHẢI bản Java. 
+> - Việc so sánh **Python Improved vs Python Base** đảm bảo sự công bằng tuyệt đối về môi trường chạy (cùng chung cơ chế Garbage Collection và quản lý bộ nhớ của Python), giúp đo đạc chính xác lượng đỉnh RAM (peak memory) và Runtime chênh lệch do chính bản thân thuật toán.
+> - Bản **Java Base** (bản gốc) chỉ được sử dụng duy nhất ở **Demo 2** để thực hiện đối chiếu chéo (cross-verification) nhằm chứng minh code Python đã biên dịch đúng 100% logic của thuật toán gốc.
 
 ### Kết quả đầu ra
 
-- **CSV**: `evaluation/results/experiment_results.csv` — Toàn bộ kết quả dạng bảng
-- **Markdown Report**: `evaluation/results/{dataset}_experiment_report.md` — Báo cáo chi tiết
-- **JSON**: `results/*.json` — Kết quả chuẩn hóa cho mỗi thí nghiệm
+- **Thư mục lưu trữ**: Mặc định lưu tại thư mục `results/` ở thư mục gốc của project (được sinh tự động).
+- **Định dạng file**: Tất cả kết quả được xuất dưới dạng **JSON** để dễ dàng truy xuất và vẽ biểu đồ.
+  - Ví dụ: `redd_exp1_overall.json`, `redd_exp2_scalability.json`
+  - File tổng hợp: `all_experiments.json`
 
 ### Output mẫu khi chạy
 
-```
+```text
 [*] Running Full Experiment Suite...
-======================================================================
-                EXP 1: SCALABILITY TEST
-======================================================================
-  Running Exp 1 with stream size: 10000
-  Base-10000: 100%|████████████████████████| 10000/10000 [00:00<00:00]
-  Imp-10000:  100%|████████████████████████| 10000/10000 [00:00<00:00]
-  ...
 
 ======================================================================
-                EXP 2: PARAMETER SENSITIVITY
+Exp1: Overall Comparison — REDD (457833 events)
 ======================================================================
-  Threshold 0.05: found 12 patterns.
-  Threshold 0.10: found 48 patterns.
-  ...
-  
+  Running Naive-Random...
+    -> HitRate = 40.48%
+  Running Naive-Majority...
+    -> HitRate = 81.51%
+  Running BFSPMiner-Base...
+    -> Patterns=105, HitRate=97.92%, Memory=22.4MB, Time=13.47s
+  Running BFSPMiner-Improved...
+    -> Patterns=203, HitRate=99.45%, Memory=40.3MB, Time=64.01s
+
 ======================================================================
-        ALL EXPERIMENTS COMPLETED SUCCESSFULLY
+Exp2: Scalability — REDD
+======================================================================
+  Stream size: 100000
+    Base: 2.18s, 74 pats, 97.0%
+    Imp:  10.14s, 136 pats, 100.0%
+...
+======================================================================
+ALL EXPERIMENTS COMPLETE
 ======================================================================
 ```
 
@@ -466,10 +477,10 @@ Bước 5: Thêm 'c' vào luồng
                          [root]
                         /  |   \
                       a    b    c
-                     / \   |    
-                    b   a  a    
-                   / \  |  |
-                  a   c b  b
+                      |    |    |
+                      b    a    b
+                      |    |    |
+                      a    b    a
 ```
 
 > **Ghi chú:** Cây lưu theo thứ tự đảo ngược. Nhánh `root → b → a` tương ứng pattern `('a', 'b')`.

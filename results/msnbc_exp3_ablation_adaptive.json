@@ -1,7 +1,7 @@
 [
   {
     "mode": "Fixed-3",
-    "runtime_s": 3.312,
+    "runtime_s": 3.328,
     "peak_memory_mb": 7.66,
     "patterns": 356,
     "closed": 355,
@@ -12,7 +12,7 @@
   },
   {
     "mode": "Fixed-5",
-    "runtime_s": 5.235,
+    "runtime_s": 4.96,
     "peak_memory_mb": 21.89,
     "patterns": 525,
     "closed": 523,
@@ -23,7 +23,7 @@
   },
   {
     "mode": "Fixed-8",
-    "runtime_s": 7.788,
+    "runtime_s": 7.688,
     "peak_memory_mb": 84.54,
     "patterns": 581,
     "closed": 578,
@@ -34,7 +34,7 @@
   },
   {
     "mode": "Fixed-12",
-    "runtime_s": 12.228,
+    "runtime_s": 11.937,
     "peak_memory_mb": 200.45,
     "patterns": 617,
     "closed": 614,
@@ -45,7 +45,7 @@
   },
   {
     "mode": "Adaptive",
-    "runtime_s": 3.943,
+    "runtime_s": 3.715,
     "peak_memory_mb": 11.69,
     "patterns": 361,
     "closed": 360,

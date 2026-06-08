@@ -1,8 +1,8 @@
 [
   {
     "max_gap": 0,
-    "runtime_s": 5.067,
-    "peak_memory_mb": 26.0,
+    "runtime_s": 4.92,
+    "peak_memory_mb": 25.99,
     "patterns": 525,
     "closed": 523,
     "maximal": 194,
@@ -12,7 +12,7 @@
   },
   {
     "max_gap": 1,
-    "runtime_s": 13.141,
+    "runtime_s": 12.751,
     "peak_memory_mb": 25.97,
     "patterns": 525,
     "closed": 523,
@@ -23,7 +23,7 @@
   },
   {
     "max_gap": 2,
-    "runtime_s": 27.318,
+    "runtime_s": 26.231,
     "peak_memory_mb": 40.47,
     "patterns": 1596,
     "closed": 1595,
@@ -34,7 +34,7 @@
   },
   {
     "max_gap": 3,
-    "runtime_s": 31.955,
+    "runtime_s": 30.062,
     "peak_memory_mb": 43.21,
     "patterns": 1895,
     "closed": 1895,
@@ -45,7 +45,7 @@
   },
   {
     "max_gap": 5,
-    "runtime_s": 32.908,
+    "runtime_s": 30.946,
     "peak_memory_mb": 45.35,
     "patterns": 1901,
     "closed": 1901,

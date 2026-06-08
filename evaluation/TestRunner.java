@@ -20,8 +20,8 @@ public class TestRunner {
         String datasetName = "toy";
         double minSup = 0.1;
         
-        if (args.length > 0 && args[0].equals("redd")) {
-            datasetName = "redd";
+        if (args.length > 0 && (args[0].equals("redd") || args[0].equals("msnbc"))) {
+            datasetName = args[0];
             minSup = 0.001;
             int limit = 100000;
             if (args.length > 1) {
@@ -33,17 +33,18 @@ public class TestRunner {
                 }
             }
             List<String> list = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new FileReader("data/redd_full_sequence.txt"))) {
+            String fileName = args[0].equals("redd") ? "data/redd_full_sequence.txt" : "data/msnbc_sequence.txt";
+            try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                 String line;
                 int count = 0;
                 while ((line = br.readLine()) != null && count < limit) {
                     if (!line.trim().isEmpty()) {
-                        list.add(line.trim().replace(" ", "|"));
+                        list.add(line.trim().replaceAll("\\s+", "|"));
                         count++;
                     }
                 }
             } catch (IOException e) {
-                System.out.println("[-] Error loading redd_full_sequence.txt");
+                System.out.println("[-] Error loading " + fileName);
                 e.printStackTrace();
             }
             stream = list.toArray(new String[0]);

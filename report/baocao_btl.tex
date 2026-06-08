@@ -681,7 +681,7 @@ $$S = \langle a, b, a, b, c \rangle, \quad L_{max} = 3$$
 \begin{verbatim}
            root (count=3)
           /           \
-      [a](c=2)      [b](c=2)
+      [a](c=2)      [b](c=1)
         |              |
       [b](c=1)      [a](c=1)
         |
@@ -704,7 +704,7 @@ $$S = \langle a, b, a, b, c \rangle, \quad L_{max} = 3$$
     \item pattern\_list = $[b, a, b]$ ($s_3=b$, $s_2=a$, $s_1=b$)
     \item Cập nhật cây:
     \begin{itemize}
-        \item Nút \texttt{b} (con root): count $2 \rightarrow 3$
+        \item Nút \texttt{b} (con root): count $1 \rightarrow 2$
         \item Nút \texttt{a} (con \texttt{b}): count $1 \rightarrow 2$
         \item Tạo nút \texttt{b} làm con của nút \texttt{a} (con \texttt{b})
     \end{itemize}
@@ -714,7 +714,7 @@ $$S = \langle a, b, a, b, c \rangle, \quad L_{max} = 3$$
 \begin{verbatim}
            root (count=4)
           /           \
-      [a](c=2)      [b](c=3)
+      [a](c=2)      [b](c=2)
         |              |
       [b](c=1)      [a](c=2)
         |              |
@@ -739,7 +739,7 @@ $$S = \langle a, b, a, b, c \rangle, \quad L_{max} = 3$$
 \begin{verbatim}
               root (count=5)
           /        |        \
-      [a](c=2)  [b](c=3)  [c](c=1)
+      [a](c=2)  [b](c=2)  [c](c=1)
         |          |          |
       [b](c=1)  [a](c=2)  [b](c=1)
         |          |          |
@@ -761,7 +761,7 @@ Duyệt DFS toàn bộ cây, đảo ngược đường đi để được mẫu 
         \midrule
         root $\rightarrow$ a              & $(a)$         & 2 & 0.40 & $\checkmark$ \\
         root $\rightarrow$ a $\rightarrow$ b     & $(b, a)$      & 1 & 0.20 & $\checkmark$ \\
-        root $\rightarrow$ b              & $(b)$         & 3 & 0.60 & $\checkmark$ \\
+        root $\rightarrow$ b              & $(b)$         & 2 & 0.40 & $\checkmark$ \\
         root $\rightarrow$ b $\rightarrow$ a     & $(a, b)$      & 2 & 0.40 & $\checkmark$ \\
         root $\rightarrow$ b $\rightarrow$ a $\rightarrow$ b & $(b, a, b)$ & 1 & 0.20 & $\checkmark$ \\
         root $\rightarrow$ c              & $(c)$         & 1 & 0.20 & $\checkmark$ \\

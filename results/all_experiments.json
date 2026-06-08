@@ -1,196 +1,11 @@
 {
-  "redd": {
-    "exp1": {
-      "dataset": "REDD",
-      "stream_size": 457833,
-      "random_hit_rate": 40.48,
-      "majority_hit_rate": 81.51,
-      "base_runtime_s": 13.47,
-      "base_peak_memory_mb": 22.35,
-      "base_patterns": 105,
-      "base_closed": 92,
-      "base_maximal": 26,
-      "base_avg_lift": 19.13,
-      "base_hit_rate_pct": 97.92,
-      "base_test_count": 914,
-      "imp_runtime_s": 64.01,
-      "imp_peak_memory_mb": 40.28,
-      "imp_patterns": 203,
-      "imp_closed": 171,
-      "imp_maximal": 32,
-      "imp_avg_lift": 17.07,
-      "imp_hit_rate_pct": 99.45,
-      "imp_test_count": 914,
-      "pattern_increase_pct": 93.3
-    },
-    "exp2": [
-      {
-        "stream_size": 10000,
-        "base_runtime": 0.193,
-        "base_memory": 0.55,
-        "base_patterns": 26,
-        "base_hitrate": 100.0,
-        "imp_runtime": 0.827,
-        "imp_memory": 1.0,
-        "imp_patterns": 48,
-        "imp_hitrate": 100.0
-      },
-      {
-        "stream_size": 50000,
-        "base_runtime": 1.055,
-        "base_memory": 2.51,
-        "base_patterns": 36,
-        "base_hitrate": 100.0,
-        "imp_runtime": 4.578,
-        "imp_memory": 4.44,
-        "imp_patterns": 68,
-        "imp_hitrate": 100.0
-      },
-      {
-        "stream_size": 100000,
-        "base_runtime": 2.178,
-        "base_memory": 4.93,
-        "base_patterns": 74,
-        "base_hitrate": 96.97,
-        "imp_runtime": 10.142,
-        "imp_memory": 9.02,
-        "imp_patterns": 136,
-        "imp_hitrate": 100.0
-      },
-      {
-        "stream_size": 200000,
-        "base_runtime": 4.899,
-        "base_memory": 9.71,
-        "base_patterns": 81,
-        "base_hitrate": 96.48,
-        "imp_runtime": 22.456,
-        "imp_memory": 18.68,
-        "imp_patterns": 153,
-        "imp_hitrate": 99.75
-      }
-    ],
-    "exp3": [
-      {
-        "mode": "Fixed-3",
-        "runtime_s": 1.773,
-        "peak_memory_mb": 4.91,
-        "patterns": 40,
-        "closed": 36,
-        "maximal": 17,
-        "avg_lift": 9.03,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "mode": "Fixed-5",
-        "runtime_s": 2.362,
-        "peak_memory_mb": 5.11,
-        "patterns": 74,
-        "closed": 62,
-        "maximal": 17,
-        "avg_lift": 12.97,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "mode": "Fixed-8",
-        "runtime_s": 2.979,
-        "peak_memory_mb": 5.56,
-        "patterns": 125,
-        "closed": 101,
-        "maximal": 17,
-        "avg_lift": 14.87,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "mode": "Fixed-12",
-        "runtime_s": 4.533,
-        "peak_memory_mb": 6.61,
-        "patterns": 193,
-        "closed": 153,
-        "maximal": 17,
-        "avg_lift": 15.84,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "mode": "Adaptive",
-        "runtime_s": 5.118,
-        "peak_memory_mb": 6.74,
-        "patterns": 224,
-        "closed": 164,
-        "maximal": 17,
-        "avg_lift": 16.27,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      }
-    ],
-    "exp4": [
-      {
-        "max_gap": 0,
-        "runtime_s": 2.366,
-        "peak_memory_mb": 5.04,
-        "patterns": 74,
-        "closed": 62,
-        "maximal": 17,
-        "avg_lift": 12.97,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "max_gap": 1,
-        "runtime_s": 7.699,
-        "peak_memory_mb": 8.21,
-        "patterns": 74,
-        "closed": 62,
-        "maximal": 17,
-        "avg_lift": 12.97,
-        "hit_rate_pct": 96.97,
-        "test_count": 198
-      },
-      {
-        "max_gap": 2,
-        "runtime_s": 9.23,
-        "peak_memory_mb": 8.94,
-        "patterns": 136,
-        "closed": 107,
-        "maximal": 17,
-        "avg_lift": 13.04,
-        "hit_rate_pct": 100.0,
-        "test_count": 198
-      },
-      {
-        "max_gap": 3,
-        "runtime_s": 10.051,
-        "peak_memory_mb": 9.03,
-        "patterns": 136,
-        "closed": 108,
-        "maximal": 17,
-        "avg_lift": 12.96,
-        "hit_rate_pct": 100.0,
-        "test_count": 198
-      },
-      {
-        "max_gap": 5,
-        "runtime_s": 9.933,
-        "peak_memory_mb": 8.96,
-        "patterns": 136,
-        "closed": 110,
-        "maximal": 17,
-        "avg_lift": 12.92,
-        "hit_rate_pct": 100.0,
-        "test_count": 198
-      }
-    ]
-  },
   "msnbc": {
     "exp1": {
       "dataset": "MSNBC",
       "stream_size": 423776,
-      "random_hit_rate": 16.55,
+      "random_hit_rate": 16.67,
       "majority_hit_rate": 49.53,
-      "base_runtime_s": 22.662,
+      "base_runtime_s": 23.299,
       "base_peak_memory_mb": 57.89,
       "base_patterns": 523,
       "base_closed": 522,
@@ -198,7 +13,7 @@
       "base_avg_lift": 3.15,
       "base_hit_rate_pct": 25.65,
       "base_test_count": 846,
-      "imp_runtime_s": 76.652,
+      "imp_runtime_s": 75.76,
       "imp_peak_memory_mb": 53.1,
       "imp_patterns": 996,
       "imp_closed": 996,
@@ -211,44 +26,44 @@
     "exp2": [
       {
         "stream_size": 10000,
-        "base_runtime": 0.451,
+        "base_runtime": 0.441,
         "base_memory": 6.21,
         "base_patterns": 592,
         "base_hitrate": 27.78,
-        "imp_runtime": 2.425,
+        "imp_runtime": 2.348,
         "imp_memory": 13.52,
         "imp_patterns": 1705,
         "imp_hitrate": 22.22
       },
       {
         "stream_size": 50000,
-        "base_runtime": 2.412,
+        "base_runtime": 2.337,
         "base_memory": 13.61,
         "base_patterns": 529,
         "base_hitrate": 24.49,
-        "imp_runtime": 8.212,
+        "imp_runtime": 7.887,
         "imp_memory": 17.67,
         "imp_patterns": 1069,
         "imp_hitrate": 38.78
       },
       {
         "stream_size": 100000,
-        "base_runtime": 5.137,
+        "base_runtime": 5.023,
         "base_memory": 21.9,
         "base_patterns": 525,
         "base_hitrate": 25.76,
-        "imp_runtime": 16.019,
+        "imp_runtime": 14.963,
         "imp_memory": 21.0,
         "imp_patterns": 1032,
         "imp_hitrate": 46.46
       },
       {
         "stream_size": 200000,
-        "base_runtime": 10.528,
+        "base_runtime": 9.878,
         "base_memory": 34.43,
         "base_patterns": 520,
         "base_hitrate": 25.88,
-        "imp_runtime": 32.738,
+        "imp_runtime": 31.421,
         "imp_memory": 30.38,
         "imp_patterns": 999,
         "imp_hitrate": 50.5
@@ -257,7 +72,7 @@
     "exp3": [
       {
         "mode": "Fixed-3",
-        "runtime_s": 3.312,
+        "runtime_s": 3.328,
         "peak_memory_mb": 7.66,
         "patterns": 356,
         "closed": 355,
@@ -268,7 +83,7 @@
       },
       {
         "mode": "Fixed-5",
-        "runtime_s": 5.235,
+        "runtime_s": 4.96,
         "peak_memory_mb": 21.89,
         "patterns": 525,
         "closed": 523,
@@ -279,7 +94,7 @@
       },
       {
         "mode": "Fixed-8",
-        "runtime_s": 7.788,
+        "runtime_s": 7.688,
         "peak_memory_mb": 84.54,
         "patterns": 581,
         "closed": 578,
@@ -290,7 +105,7 @@
       },
       {
         "mode": "Fixed-12",
-        "runtime_s": 12.228,
+        "runtime_s": 11.937,
         "peak_memory_mb": 200.45,
         "patterns": 617,
         "closed": 614,
@@ -301,7 +116,7 @@
       },
       {
         "mode": "Adaptive",
-        "runtime_s": 3.943,
+        "runtime_s": 3.715,
         "peak_memory_mb": 11.69,
         "patterns": 361,
         "closed": 360,
@@ -314,8 +129,8 @@
     "exp4": [
       {
         "max_gap": 0,
-        "runtime_s": 5.067,
-        "peak_memory_mb": 26.0,
+        "runtime_s": 4.92,
+        "peak_memory_mb": 25.99,
         "patterns": 525,
         "closed": 523,
         "maximal": 194,
@@ -325,7 +140,7 @@
       },
       {
         "max_gap": 1,
-        "runtime_s": 13.141,
+        "runtime_s": 12.751,
         "peak_memory_mb": 25.97,
         "patterns": 525,
         "closed": 523,
@@ -336,7 +151,7 @@
       },
       {
         "max_gap": 2,
-        "runtime_s": 27.318,
+        "runtime_s": 26.231,
         "peak_memory_mb": 40.47,
         "patterns": 1596,
         "closed": 1595,
@@ -347,7 +162,7 @@
       },
       {
         "max_gap": 3,
-        "runtime_s": 31.955,
+        "runtime_s": 30.062,
         "peak_memory_mb": 43.21,
         "patterns": 1895,
         "closed": 1895,
@@ -358,13 +173,198 @@
       },
       {
         "max_gap": 5,
-        "runtime_s": 32.908,
+        "runtime_s": 30.946,
         "peak_memory_mb": 45.35,
         "patterns": 1901,
         "closed": 1901,
         "maximal": 1081,
         "avg_lift": 2.68,
         "hit_rate_pct": 51.01,
+        "test_count": 198
+      }
+    ]
+  },
+  "redd": {
+    "exp1": {
+      "dataset": "REDD",
+      "stream_size": 457833,
+      "random_hit_rate": 39.17,
+      "majority_hit_rate": 81.51,
+      "base_runtime_s": 13.312,
+      "base_peak_memory_mb": 22.03,
+      "base_patterns": 105,
+      "base_closed": 92,
+      "base_maximal": 26,
+      "base_avg_lift": 19.13,
+      "base_hit_rate_pct": 97.92,
+      "base_test_count": 914,
+      "imp_runtime_s": 60.701,
+      "imp_peak_memory_mb": 40.39,
+      "imp_patterns": 203,
+      "imp_closed": 171,
+      "imp_maximal": 32,
+      "imp_avg_lift": 17.07,
+      "imp_hit_rate_pct": 99.45,
+      "imp_test_count": 914,
+      "pattern_increase_pct": 93.3
+    },
+    "exp2": [
+      {
+        "stream_size": 10000,
+        "base_runtime": 0.198,
+        "base_memory": 0.53,
+        "base_patterns": 26,
+        "base_hitrate": 100.0,
+        "imp_runtime": 0.832,
+        "imp_memory": 1.01,
+        "imp_patterns": 48,
+        "imp_hitrate": 100.0
+      },
+      {
+        "stream_size": 50000,
+        "base_runtime": 1.04,
+        "base_memory": 2.58,
+        "base_patterns": 36,
+        "base_hitrate": 100.0,
+        "imp_runtime": 4.458,
+        "imp_memory": 4.36,
+        "imp_patterns": 68,
+        "imp_hitrate": 100.0
+      },
+      {
+        "stream_size": 100000,
+        "base_runtime": 2.153,
+        "base_memory": 5.02,
+        "base_patterns": 74,
+        "base_hitrate": 96.97,
+        "imp_runtime": 9.833,
+        "imp_memory": 8.91,
+        "imp_patterns": 136,
+        "imp_hitrate": 100.0
+      },
+      {
+        "stream_size": 200000,
+        "base_runtime": 4.691,
+        "base_memory": 9.88,
+        "base_patterns": 81,
+        "base_hitrate": 96.48,
+        "imp_runtime": 22.281,
+        "imp_memory": 18.77,
+        "imp_patterns": 153,
+        "imp_hitrate": 99.75
+      }
+    ],
+    "exp3": [
+      {
+        "mode": "Fixed-3",
+        "runtime_s": 1.782,
+        "peak_memory_mb": 4.89,
+        "patterns": 40,
+        "closed": 36,
+        "maximal": 17,
+        "avg_lift": 9.03,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "mode": "Fixed-5",
+        "runtime_s": 2.388,
+        "peak_memory_mb": 5.12,
+        "patterns": 74,
+        "closed": 62,
+        "maximal": 17,
+        "avg_lift": 12.97,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "mode": "Fixed-8",
+        "runtime_s": 3.08,
+        "peak_memory_mb": 5.69,
+        "patterns": 125,
+        "closed": 101,
+        "maximal": 17,
+        "avg_lift": 14.87,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "mode": "Fixed-12",
+        "runtime_s": 4.214,
+        "peak_memory_mb": 6.37,
+        "patterns": 193,
+        "closed": 153,
+        "maximal": 17,
+        "avg_lift": 15.84,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "mode": "Adaptive",
+        "runtime_s": 4.38,
+        "peak_memory_mb": 6.93,
+        "patterns": 224,
+        "closed": 164,
+        "maximal": 17,
+        "avg_lift": 16.27,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      }
+    ],
+    "exp4": [
+      {
+        "max_gap": 0,
+        "runtime_s": 2.32,
+        "peak_memory_mb": 4.99,
+        "patterns": 74,
+        "closed": 62,
+        "maximal": 17,
+        "avg_lift": 12.97,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "max_gap": 1,
+        "runtime_s": 7.699,
+        "peak_memory_mb": 8.25,
+        "patterns": 74,
+        "closed": 62,
+        "maximal": 17,
+        "avg_lift": 12.97,
+        "hit_rate_pct": 96.97,
+        "test_count": 198
+      },
+      {
+        "max_gap": 2,
+        "runtime_s": 9.356,
+        "peak_memory_mb": 9.05,
+        "patterns": 136,
+        "closed": 107,
+        "maximal": 17,
+        "avg_lift": 13.04,
+        "hit_rate_pct": 100.0,
+        "test_count": 198
+      },
+      {
+        "max_gap": 3,
+        "runtime_s": 10.288,
+        "peak_memory_mb": 9.09,
+        "patterns": 136,
+        "closed": 108,
+        "maximal": 17,
+        "avg_lift": 12.96,
+        "hit_rate_pct": 100.0,
+        "test_count": 198
+      },
+      {
+        "max_gap": 5,
+        "runtime_s": 10.043,
+        "peak_memory_mb": 9.02,
+        "patterns": 136,
+        "closed": 110,
+        "maximal": 17,
+        "avg_lift": 12.92,
+        "hit_rate_pct": 100.0,
         "test_count": 198
       }
     ]

@@ -1,8 +1,8 @@
 [
   {
     "mode": "Fixed-3",
-    "runtime_s": 1.773,
-    "peak_memory_mb": 4.91,
+    "runtime_s": 1.782,
+    "peak_memory_mb": 4.89,
     "patterns": 40,
     "closed": 36,
     "maximal": 17,
@@ -12,8 +12,8 @@
   },
   {
     "mode": "Fixed-5",
-    "runtime_s": 2.362,
-    "peak_memory_mb": 5.11,
+    "runtime_s": 2.388,
+    "peak_memory_mb": 5.12,
     "patterns": 74,
     "closed": 62,
     "maximal": 17,
@@ -23,8 +23,8 @@
   },
   {
     "mode": "Fixed-8",
-    "runtime_s": 2.979,
-    "peak_memory_mb": 5.56,
+    "runtime_s": 3.08,
+    "peak_memory_mb": 5.69,
     "patterns": 125,
     "closed": 101,
     "maximal": 17,
@@ -34,8 +34,8 @@
   },
   {
     "mode": "Fixed-12",
-    "runtime_s": 4.533,
-    "peak_memory_mb": 6.61,
+    "runtime_s": 4.214,
+    "peak_memory_mb": 6.37,
     "patterns": 193,
     "closed": 153,
     "maximal": 17,
@@ -45,8 +45,8 @@
   },
   {
     "mode": "Adaptive",
-    "runtime_s": 5.118,
-    "peak_memory_mb": 6.74,
+    "runtime_s": 4.38,
+    "peak_memory_mb": 6.93,
     "patterns": 224,
     "closed": 164,
     "maximal": 17,

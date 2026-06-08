@@ -329,17 +329,29 @@ def save_results(data, filename):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--limit", type=int, default=0, help="Limit stream size for quick testing (0=full)")
+    parser.add_argument("--dataset", type=str, default="all", choices=["all", "redd", "msnbc"], help="Dataset to run")
+    parser.add_argument("--full", action="store_true", help="Run full stream (overrides limit)")
+    args = parser.parse_args()
+
+    limit = 0 if args.full else args.limit
+    dataset_filter = args.dataset.lower()
+
     all_results = {}
 
     # --- REDD ---
-    if REDD_PATH.exists():
+    if REDD_PATH.exists() and dataset_filter in ["all", "redd"]:
         print("\n" + "="*70)
         print("LOADING REDD DATASET")
         print("="*70)
         redd_full = load_stream(REDD_PATH)
+        if limit > 0:
+            redd_full = redd_full[:limit]
         print(f"  Total events: {len(redd_full)}")
         print(f"  Unique items: {len(set(redd_full))}")
-        redd_100k = redd_full[:100000]
+        redd_100k = redd_full[:min(100000, len(redd_full))]
 
         r1 = exp1_overall_comparison(redd_full, "REDD")
         save_results(r1, "redd_exp1_overall.json")
@@ -356,14 +368,16 @@ def main():
         all_results["redd"] = {"exp1": r1, "exp2": r2, "exp3": r3, "exp4": r4}
 
     # --- MSNBC ---
-    if MSNBC_PATH.exists():
+    if MSNBC_PATH.exists() and dataset_filter in ["all", "msnbc"]:
         print("\n" + "="*70)
         print("LOADING MSNBC DATASET")
         print("="*70)
         msnbc_full = load_stream(MSNBC_PATH)
+        if limit > 0:
+            msnbc_full = msnbc_full[:limit]
         print(f"  Total events: {len(msnbc_full)}")
         print(f"  Unique items: {len(set(msnbc_full))}")
-        msnbc_100k = msnbc_full[:100000]
+        msnbc_100k = msnbc_full[:min(100000, len(msnbc_full))]
 
         m1 = exp1_overall_comparison(msnbc_full, "MSNBC")
         save_results(m1, "msnbc_exp1_overall.json")
@@ -380,6 +394,16 @@ def main():
         all_results["msnbc"] = {"exp1": m1, "exp2": m2, "exp3": m3, "exp4": m4}
 
     # Save combined results
+    combined_path = RESULTS_DIR / "all_experiments.json"
+    if combined_path.exists():
+        try:
+            with open(combined_path, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+                existing_data.update(all_results)
+                all_results = existing_data
+        except Exception:
+            pass
+            
     save_results(all_results, "all_experiments.json")
     print("\n" + "="*70)
     print("ALL EXPERIMENTS COMPLETE")
